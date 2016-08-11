@@ -1,0 +1,1 @@
+The file will now be uploaded to NOFA and matched with locationIDs. Note that this may take a while, depending upon the filesize. The matched data will display as a table on the rigth when finished. You can then push the button below to download the matched data as a .csv file")

@@ -1,0 +1,16 @@
+#########################################################
+# ToDo list 
+#
+#########################################################
+
+-  data validation shceem.... "data-prefligth check"
+
+
+#########################################################
+# To fix when final implementation of NOFA
+#
+#########################################################
+
+ - lake.id will change to lake.locationID; used in locationID map.... 
+
+

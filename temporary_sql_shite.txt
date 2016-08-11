@@ -1,0 +1,14 @@
+﻿ST_Transform(centroid)
+
+ALTER TABLE nofa_new.lake
+ ADD COLUMN centroid_latlong geometry(POINT,4326);
+ 
+ UPDATE nofa_new.lake SET centroid_latlong = ST_Transform(centroid, 4326);
+
+ UPDATE nofa_new.lake SET "decimalLatitude" = ST_Y(centroid_latlong);
+ UPDATE nofa_new.lake SET "decimalLongitude" = ST_X(centroid_latlong);
+ 
+
+  
+SELECT ST_X(centroid), ST_Y(centroid), ST_AsText(centroid) 
+       FROM nofa_new.lake;
