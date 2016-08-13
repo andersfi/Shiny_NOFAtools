@@ -36,11 +36,25 @@ l_spawningLocation <- dbGetQuery(nofa_db_RPostgreSQL,"SELECT * FROM nofa_new.\"l
 l_reliability <- dbGetQuery(nofa_db_RPostgreSQL,"SELECT * FROM nofa_new.\"l_reliability\"")
 l_samplingProtocol <- dbGetQuery(nofa_db_RPostgreSQL,"SELECT * FROM nofa_new.\"l_samplingProtocol\"")
 
-# download location info and store as data.table 
-#locations_tbl <- tbl(nofa_db_dplyr,"lake")
-#locations_temp <- select(locations_tbl,decimalLatitude,decimalLongitude,id,nationalWaterBodyID,waterbody,municipalityIDs)
-#locations <- as.data.table(locations_temp) # create in-memory object from db connection
-#RPostgreSQL::dbDisconnect(nofa_db_dplyr$con) # close db connection
+#------------------------------------------------------------------------------
+# Get list of column names for selected tables
+#------------------------------------------------------------------------------
+# get columnames
+nofa_colnames <- dbGetQuery(nofa_db_RPostgreSQL, "SELECT * FROM information_schema.columns 
+                             WHERE table_schema='nofa_new' AND table_name='event'
+                               OR table_schema='nofa_new' AND table_name='occurence'
+                               OR table_schema='nofa_new' AND table_name='location';") %>%
+                select(column_name,table_name,data_type,ordinal_position)
+
+#------------------------------------------------------------------------------
+# Get comments for selected tables
+#------------------------------------------------------------------------------
+
+nofa_tablecomments <- dbGetQuery(nofa_db_RPostgreSQL, "SELECT * FROM pg_description 
+                                  WHERE  objoid = 'nofa_new.event'::regclass
+                                  OR objoid = 'nofa_new.occurence'::regclass
+                                  OR objoid = 'nofa_new.location'::regclass;")
+
 
 # cloase db connections 
 RPostgreSQL::dbDisconnect(nofa_db_RPostgreSQL)
